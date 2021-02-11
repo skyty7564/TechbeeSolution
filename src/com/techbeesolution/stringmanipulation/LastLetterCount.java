@@ -9,29 +9,30 @@ public class LastLetterCount {
 		sentence.trim();
 		String wordReplace = null;
 		 int count =0;
-		 int firstOccurance = 0;
+		 int first = -1;
 		 boolean switchWord = false;
 		String[] listWord =  sentence.trim().split(" ");
 		 for (int i = 0 ; i < listWord.length;i++)
 			{
 				int lastChar = listWord[i].length() - 1;
-				if(listWord[i].charAt(lastChar) == 's' ||  listWord[i].charAt(lastChar) == 'y' )
+				char charCheck = listWord[i].charAt(lastChar);
+				System.out.println(listWord[i] + ":" + charCheck);
+				if(charCheck == 's' ||  charCheck == 'y' )
 					{
-						if(wordReplace == null)
+						if(first == -1)
 						{	
-							firstOccurance = i;
-							wordReplace = listWord[i];
+							first = i;
 						
 						}
-						else if(listWord[i].charAt(lastChar) != wordReplace.charAt(wordReplace.length() -1) && switchWord == false)
+						else if(charCheck != listWord[first].charAt(listWord[first].length()-1)  && switchWord == false)
 						{
 			
-							listWord[firstOccurance] = listWord[i];
+							listWord[first] = listWord[i];
 							listWord[i] = wordReplace; 
 							switchWord = true;
 						}
 						
-					count++;
+				count++;
 					}
 			}
 

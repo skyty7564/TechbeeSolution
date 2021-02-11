@@ -39,7 +39,9 @@ public class MainString {
 			LastLetterCount testLastLetterCount = new LastLetterCount();
 			testLastLetterCount.switchWord(sentWord);
 			
-			userInput.close();
+			userInput.close(); 
+			
+
 			
 
 	}
