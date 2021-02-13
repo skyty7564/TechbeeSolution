@@ -6,13 +6,15 @@ public class BankAccount {
 	{}
 	
 	public BankAccount(int accNum, double balance, String fName, String lName, String email, long phoneNumber) {
-		super();
-		this.accNum = accNum;
-		this.balance = balance;
-		this.fName = fName;
-		this.lName = lName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
+		super();			
+			this.accNum = accNum;
+			this.balance = balance;
+			this.fName = fName;
+			this.lName = lName;
+			this.email = email;
+			this.phoneNumber = phoneNumber;
+		
+
 	}
 	private int accNum;
 	private double balance;
