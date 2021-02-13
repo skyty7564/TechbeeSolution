@@ -15,9 +15,11 @@ public class FrontEnd {
 					{
 						mainInput = userInput.nextInt();
 						double fundAmount =0;
+						
 						boolean validTran= false;
 						do
 						{
+						
 							switch (mainInput)
 							{
 								case 1:
@@ -57,16 +59,15 @@ public class FrontEnd {
 									BaoNguyen.displayInfo();
 									validTran = true;
 									break;
-								case 4:
-									System.out.println("Thank you for using our service!");
-									validTran = true;
-									break;
+							
 								default:
+									validTran = true;
 									userInput.nextLine();
 								
 							}
 							
 						}while (validTran != true);
+						System.out.println("-------------------------------------");
 					
 					}
 					else
@@ -123,7 +124,9 @@ public class FrontEnd {
 				*/
 				
 			}while (mainInput != 4);
-			System.out.println("Thank you for using our service");
+
+			System.out.println("Thank you for using our service!");
+
 	
 			userInput.close();
 		

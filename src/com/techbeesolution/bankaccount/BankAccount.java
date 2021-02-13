@@ -32,19 +32,30 @@ public class BankAccount {
 		return balance;
 	}
 	public void setBalance(int balance) {
-		this.balance = balance;
+		if(balance > 0)
+			this.balance = balance;
+		else
+			System.out.println("Invalid Input");
 	}
 	public String getfName() {
 		return fName;
 	}
 	public void setfName(String fName) {
-		this.fName = fName;
+		if(checkRange(fName.length(),2))
+			this.fName = fName;
+		else
+			System.out.println("Name must be greate than 2 character");
 	}
 	public String getlName() {
 		return lName;
 	}
 	public void setlName(String lName) {
-		this.lName = lName;
+		
+		if(checkRange(lName.length(),2))
+			this.lName = lName;
+		else
+			System.out.println("Name must be greate than 2 character");
+			
 	}
 	public String getEmail() {
 		return email;
@@ -56,7 +67,11 @@ public class BankAccount {
 		return phoneNumber;
 	}
 	public void setPhoneNumber(long phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		String s = Long.toString(phoneNumber);
+		if(checkRange(s.length(),10))
+			this.phoneNumber = phoneNumber;
+		else
+			System.out.println("Name must be greate than 10 character");
 	}
 
 	
@@ -65,6 +80,18 @@ public class BankAccount {
 		balance += amount;
 		displayFunds("Fund deposited!");
 	}
+	private static boolean checkRange(int value, int numLength)
+	{
+		if (value < numLength)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 	
 	public void withdrawFunds(double amount)
 	{
@@ -94,8 +121,6 @@ public class BankAccount {
 		System.out.println("Bank Account Number:"+accNum);
 		System.out.println("Customer Name:" + fName + " " + lName);
 		System.out.println("Bank Account Fund:$" + balance);
-		System.out.println("Customer Email:" + email);
-		System.out.println("Customer Phone Number:" + phoneNumber);
-	}
+		}
 	
 }
