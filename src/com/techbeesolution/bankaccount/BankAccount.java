@@ -31,9 +31,9 @@ public class BankAccount {
 	public double getBalance() {
 		return balance;
 	}
-	public void setBalance(int balance) {
-		if(balance > 0)
-			this.balance = balance;
+	public void setBalance(double d) {
+		if(d > 0)
+			this.balance = d;
 		else
 			System.out.println("Invalid Input");
 	}
@@ -75,11 +75,7 @@ public class BankAccount {
 	}
 
 	
-	public void depositFunds(double amount)
-	{
-		balance += amount;
-		displayFunds("Fund deposited!");
-	}
+	
 	private static boolean checkRange(int value, int numLength)
 	{
 		if (value < numLength)
@@ -93,34 +89,6 @@ public class BankAccount {
 	}
 
 	
-	public void withdrawFunds(double amount)
-	{
-		double tempValue = balance - amount;
-		
-		if (tempValue < 0)
-		{
-			displayFunds("Insufficent fund!");
-		}
-		else
-		{
-			balance = tempValue;
-			displayFunds("Fund Successfully Withdrawed!");
-		}
-	}
-	
-	public void displayFunds(String Message)
-	{
-		System.out.println("Bank Account User:" + fName+ " " + lName);
-		System.out.println(Message);
-		System.out.println("Bank Balance:$" + String.format("%,.2f",balance));
-		
-	}
-	
-	public void displayInfo()
-	{
-		System.out.println("Bank Account Number:"+accNum);
-		System.out.println("Customer Name:" + fName + " " + lName);
-		System.out.println("Bank Account Fund:$" + balance);
-		}
+
 	
 }

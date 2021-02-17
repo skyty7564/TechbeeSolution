@@ -4,7 +4,29 @@ public class FrontEnd {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		BankUserDao newTest  = new BankUserDao();
+		
+	
 		BankAccount BaoNguyen =  new BankAccount(123456789,50.00,"Bao","Nguyen","Skyty7564@yahoo.com", 9413218567L);
+		BankAccount BaNguyen =  new BankAccount(123456789,50.00,"Ba","Nguyen","Skyty7564@yahoo.com", 9413218567L);
+		BankAccount BoNguyen =  new BankAccount(123456789,50.00,"Bo","Nguyen","Skyty7564@yahoo.com", 9413218567L);
+		BankAccount aoNguyen =  new BankAccount(123456789,50.00,"ao","Nguyen","Skyty7564@yahoo.com", 9413218567L);
+		newTest.addUser(BaoNguyen);
+		newTest.addUser(BaNguyen);
+		newTest.addUser(BoNguyen);
+		newTest.addUser(aoNguyen);
+		
+		for (BankAccount user : newTest.getAllUsers())
+		{
+			System.out.println("User:" + user.getfName() +" : Email: "+user.getEmail());
+		}
+		
+		System.out.println("*************************************");
+		
+	
+		
+		
 	
 		int mainInput = -1;
 		Scanner userInput = new Scanner(System.in);
@@ -28,7 +50,7 @@ public class FrontEnd {
 									if(userInput.hasNextDouble())
 									{
 										fundAmount = userInput.nextDouble();
-										BaoNguyen.withdrawFunds(fundAmount);
+										newTest.withdrawFunds(BaoNguyen,fundAmount);
 										validTran = true;
 									
 									}
@@ -44,7 +66,7 @@ public class FrontEnd {
 									if(userInput.hasNextDouble())
 									{
 										fundAmount = userInput.nextDouble();
-										BaoNguyen.depositFunds(fundAmount);
+										newTest.depositFunds(BaoNguyen,fundAmount);
 										validTran = true;
 									
 									}
@@ -56,7 +78,7 @@ public class FrontEnd {
 									}
 									break;
 								case 3:
-									BaoNguyen.displayInfo();
+									newTest.displayInfo(BaoNguyen);
 									validTran = true;
 									break;
 							
@@ -76,52 +98,6 @@ public class FrontEnd {
 						System.out.println("-------------------------------------");
 						userInput.nextLine();
 					}
-							
-			/*	try
-				{
-					boolean validTran = false;
-					do	
-					{
-						mainInput = userInput.nextInt();
-						double fundAmount = 0;
-						switch (mainInput)
-						{	
-						case 1:
-							System.out.println("Enter Withdraw Amount:");
-							try {
-								fundAmount = userInput.nextDouble();
-								BaoNguyen.withdrawFunds(fundAmount);
-							}
-							catch (Exception E)
-							{
-								System.out.println("Invalid Input");
-							}
-						
-							
-							break;
-						case 2:
-							System.out.println("Enter Deposit Amount:");
-							fundAmount = userInput.nextDouble();
-							BaoNguyen.depositFunds(fundAmount);
-							break;
-						case 3:
-							BaoNguyen.displayInfo();
-							break;
-						}
-					}while (validTran == true);
-					
-					
-					
-				}
-				catch (Exception E)
-				{
-					System.out.println("Invalid Input");
-					userInput.nextLine();
-				}
-				
-					
-				
-				*/
 				
 			}while (mainInput != 4);
 
