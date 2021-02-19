@@ -7,10 +7,6 @@ public class FrontEnd {
 		
 		BankUserDao daoUserList  = new BankUserDao();
 		
-	
-	
-		
-		System.out.println("*************************************");
 		Scanner userCheck = new Scanner(System.in);
 		System.out.println("Enter name:");
 		String userN = null;

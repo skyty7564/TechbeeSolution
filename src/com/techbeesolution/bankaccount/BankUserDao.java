@@ -94,6 +94,9 @@ public class BankUserDao {
 		System.out.println("Bank Account Number:"+user.getAccNum());
 		System.out.println("Customer Name:" + user.getfName() + " " + user.getlName());
 		System.out.println("Bank Account Fund:$" + user.getBalance());
+		System.out.println("Customer Email:" + user.getEmail());
+		System.out.println("Customer Phone Number:" + user.getPhoneNumber());
+		
 		}
 	
 	
