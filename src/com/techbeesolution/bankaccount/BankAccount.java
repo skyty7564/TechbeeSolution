@@ -2,9 +2,18 @@ package com.techbeesolution.bankaccount;
 
 public class BankAccount {
 	
+	public BankAccount(int accNum, String fName, String lName) {
+		super();
+		this.accNum = accNum;
+		this.fName = fName;
+		this.lName = lName;
+	}
+
+
 	public BankAccount()
 	{}
 	
+
 	public BankAccount(int accNum, double balance, String fName, String lName, String email, long phoneNumber) {
 		super();			
 			this.accNum = accNum;

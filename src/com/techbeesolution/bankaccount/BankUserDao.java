@@ -7,9 +7,12 @@ public class BankUserDao {
 
 	private ArrayList<BankAccount> listUser;
 	
+	
 	public BankUserDao()
 	{
 		listUser = new ArrayList<BankAccount>();
+		BankAccount Admin = new BankAccount (1,"Admin","Admin");
+		listUser.add(Admin);
 	}
 	
 	public List<BankAccount> getAllUsers()
@@ -17,9 +20,20 @@ public class BankUserDao {
 		return listUser;
 	}
 	
-	public void retrieveUser()
+	public BankAccount retrieveUser(String name)
 	{
-		//code for adding user from database
+		
+	
+		for(BankAccount user : listUser)
+		{
+			
+			if(name.equals(user.getfName()))
+			{
+				return user;
+			}
+	
+		}
+		return null;
 		
 	}
 	public void addUser(BankAccount user)
@@ -33,6 +47,24 @@ public class BankUserDao {
 		displayFunds(user,"Fund deposited!");
 	}
 	
+	public boolean checkUser(String name)
+	{
+		
+		for(BankAccount user : listUser)
+		{
+		
+			if(name.equals(user.getfName()))
+			{
+				
+				return true;
+			
+			}
+			
+		}
+		return false;
+		
+		
+	}
 	public void withdrawFunds(BankAccount user, double amount)
 	{
 		double balance = user.getBalance();

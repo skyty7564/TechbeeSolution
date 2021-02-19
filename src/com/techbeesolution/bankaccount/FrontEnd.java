@@ -5,110 +5,142 @@ public class FrontEnd {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		BankUserDao newTest  = new BankUserDao();
+		BankUserDao daoUserList  = new BankUserDao();
 		
 	
-		BankAccount BaoNguyen =  new BankAccount(123456789,50.00,"Bao","Nguyen","Skyty7564@yahoo.com", 9413218567L);
-		BankAccount BaNguyen =  new BankAccount(123456789,50.00,"Ba","Nguyen","Skyty7564@yahoo.com", 9413218567L);
-		BankAccount BoNguyen =  new BankAccount(123456789,50.00,"Bo","Nguyen","Skyty7564@yahoo.com", 9413218567L);
-		BankAccount aoNguyen =  new BankAccount(123456789,50.00,"ao","Nguyen","Skyty7564@yahoo.com", 9413218567L);
-		newTest.addUser(BaoNguyen);
-		newTest.addUser(BaNguyen);
-		newTest.addUser(BoNguyen);
-		newTest.addUser(aoNguyen);
-		
-		for (BankAccount user : newTest.getAllUsers())
-		{
-			System.out.println("User:" + user.getfName() +" : Email: "+user.getEmail());
-		}
+	
 		
 		System.out.println("*************************************");
+		Scanner userCheck = new Scanner(System.in);
+		System.out.println("Enter name:");
+		String userN = null;
+		userN = userCheck.nextLine();
 		
-	
-		
-		
-	
-		int mainInput = -1;
-		Scanner userInput = new Scanner(System.in);
-			do {
-				System.out.println("Main Menu \n 1: Withdraw Fund \n 2: Deposit Fund \n 3: Display user Info \n 4: quit" );
-					//check for valid option
-					if( userInput.hasNextInt())
-					{
-						mainInput = userInput.nextInt();
-						double fundAmount =0;
-						
-						boolean validTran= false;
-						do
-						{
-						
-							switch (mainInput)
+		do {
+					
+				boolean userExist = daoUserList.checkUser(userN);			
+			
+				System.out.println("Check User \n-------------------------------");
+				System.out.println(userExist);
+				if(userExist)
+				{
+					int mainInput = -1;
+					
+					BankAccount user;
+					user = daoUserList.retrieveUser(userN);
+					do {
+						System.out.println("Main Menu \n 1: Withdraw Fund \n 2: Deposit Fund \n 3: Display user Info \n 4: Add User \n 6: quit" );
+							//check for valid option
+							if( userCheck.hasNextInt())
 							{
-								case 1:
-									System.out.println("Enter Withdraw Amount:");
-									//check for valid input
-									if(userInput.hasNextDouble())
+								mainInput = userCheck.nextInt();
+								double fundAmount = 0;
+								
+								boolean validTran= false;
+								do
+								{
+								
+									switch (mainInput)
 									{
-										fundAmount = userInput.nextDouble();
-										newTest.withdrawFunds(BaoNguyen,fundAmount);
-										validTran = true;
+										case 1:
+											System.out.println("Enter Withdraw Amount:");
+											//check for valid input
+											if(userCheck.hasNextDouble())
+											{
+												fundAmount = userCheck.nextDouble();
+												daoUserList.withdrawFunds(user,fundAmount);
+												validTran = true;
+											
+											}
+											else
+											{
+												System.out.println("Invalid Value");
+												System.out.println("-------------------------------------");
+												userCheck.next();
+											}												
+											break;
+										case 2:
+											System.out.println("Enter Deposit Amount:");
+											if(userCheck.hasNextDouble())
+											{
+												fundAmount = userCheck.nextDouble();
+												daoUserList.depositFunds(user,fundAmount);
+												validTran = true;
+											
+											}
+											else
+											{
+												System.out.println("Invalid Value");
+												System.out.println("-------------------------------------");
+												userCheck.next();
+											}
+											break;
+										case 3:
+											daoUserList.displayInfo(user);
+											validTran = true;
+											break;
+										case 4:
+										{
+											System.out.println("Please Enter First Name:");
+											String fName = userCheck.next();
+											System.out.println("Please Enter last Name:");
+											String lName = userCheck.next();
+											System.out.println("Please Enter Account Number:");
+											int accNum = userCheck.nextInt();
+											System.out.println("Please Enter Email:");
+											String email = userCheck.next();
+											System.out.println("Please Enter PhoneNumber:");
+											long phoneNum = userCheck.nextLong();
+											System.out.println("Please Enter Balance:");
+											double balance = userCheck.nextDouble();
+											
+											BankAccount newUser = new BankAccount(accNum,balance,fName,lName,email,phoneNum);
+											daoUserList.addUser(newUser);
+										}
+										default:
+											validTran = true;
+											userCheck.nextLine();
+										
+									}
 									
-									}
-									else
-									{
-										System.out.println("Invalid Value");
-										System.out.println("-------------------------------------");
-										userInput.next();
-									}												
-									break;
-								case 2:
-									System.out.println("Enter Deposit Amount:");
-									if(userInput.hasNextDouble())
-									{
-										fundAmount = userInput.nextDouble();
-										newTest.depositFunds(BaoNguyen,fundAmount);
-										validTran = true;
-									
-									}
-									else
-									{
-										System.out.println("Invalid Value");
-										System.out.println("-------------------------------------");
-										userInput.next();
-									}
-									break;
-								case 3:
-									newTest.displayInfo(BaoNguyen);
-									validTran = true;
-									break;
+								}while (validTran != true);
+								System.out.println("-------------------------------------");
 							
-								default:
-									validTran = true;
-									userInput.nextLine();
+							}
+							else
+							{
+								System.out.println("Invalid Input");
+								System.out.println("-------------------------------------");
+								userCheck.nextLine();
 								
 							}
-							
-						}while (validTran != true);
-						System.out.println("-------------------------------------");
+						
+					}while (mainInput != 6);
+
+					System.out.println("log Out");
+					System.out.println("Enter name:");
+					userN = userCheck.nextLine();
 					
-					}
-					else
-					{
-						System.out.println("Invalid Input");
-						System.out.println("-------------------------------------");
-						userInput.nextLine();
-					}
 				
-			}while (mainInput != 4);
-
-			System.out.println("Thank you for using our service!");
-
+				}
+				else
+				{
+					System.out.println("Enter name:");
+					userN = userCheck.nextLine();	
+				}
 	
-			userInput.close();
-		
+			
+				
+
+			
+		}while (!userN.equals("Quit"));
+		System.out.println("Thank you for using our service!");
+		userCheck.close();
 		
 
 	
 	}
+
+	
 
 }
