@@ -11,16 +11,16 @@ import java.util.List;
 
 public class BankUserDao {
 	
-	final String JDBC_DRIVER =  "com.mysql.cj.jdbc.Driver";
-	final String DB_URL ="jdbc:mysql://userdb.cbyib0kp0daq.us-east-2.rds.amazonaws.com/BankDemo";
-	final String USER = "Admin";
-	final String PASSWORD = "Password";
-	private Connection conn = null;
-	private PreparedStatement preStmt = null;
-	private ArrayList<BankAccount> listUser;
+	final static String JDBC_DRIVER =  "com.mysql.cj.jdbc.Driver";
+	final static String DB_URL ="jdbc:mysql://userdb.cbyib0kp0daq.us-east-2.rds.amazonaws.com/BankDemo";
+	final static String USER = "Admin";
+	final static String PASSWORD = "Password";
+	private static Connection conn = null;
+	private static PreparedStatement preStmt = null;
+	private ArrayList<BankAccount> listUser = new ArrayList<BankAccount>();
 	
-	
-	public void DBOpen()
+	//open the DB connection
+	public static void DBOpen()
 	{
 		System.out.println("Connecting to Database");	
 		try
@@ -33,19 +33,14 @@ public class BankUserDao {
 
 		catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Connection CLose");
 		}
 	
 	}
 	
 	
 	
-	public BankUserDao()
-	{
-		listUser = new ArrayList<BankAccount>();
-		BankAccount Admin = new BankAccount (1,"Admin","Admin");
-		listUser.add(Admin);
-	}
+
 	
 	public List<BankAccount> getAllUsers()
 	{
@@ -53,24 +48,22 @@ public class BankUserDao {
 		
 		return listUser;
 	}
-	
-	public BankAccount retrieveUser(int Acc)
+	//check to see account exist
+	public static BankAccount retrieveUser(int Acc)
 	{
-
-	
 		DBOpen();
 		try {
 			preStmt = conn.prepareStatement("Select * from usersDB Where AccNum = ?");
 			preStmt.setInt(1, Acc);
 			ResultSet result = preStmt.executeQuery();
-			BankAccount user = new BankAccount();;
+			BankAccount user = new BankAccount();
 			while(result.next())
 			{
 				user.setfName(result.getString("FirstName"));
 				user.setlName(result.getString("LastName"));
 				user.setAccNum(result.getInt("AccNum"));
 				user.setPhoneNumber(result.getLong("PhoneNumber"));
-				user.setfName(result.getString("email"));
+				user.setEmail(result.getString("email"));
 				user.setBalance(result.getDouble("Balance"));
 				
 			}
@@ -83,28 +76,70 @@ public class BankUserDao {
 			e.printStackTrace();
 		}
 		return null;
-		
 	}
+	
+	//check to see if the user exist before adding current new user
+	public static boolean retrieveUser(BankAccount Acc)
+	{
+		DBOpen();
+		try {
+			preStmt = conn.prepareStatement("Select 1 from usersDB Where AccNum = ?");
+			preStmt.setInt(1, Acc.getAccNum());
+			ResultSet result = preStmt.executeQuery();
+			
+			if(result.next())
+			{
+		       return true;
+				
+			}
+			
+			
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	//add user to list before adding the database
 	public void addUser(BankAccount user)
 	{
+	
 		listUser.add(user);
 		
 	}
 	
+	//update the database;
 	public void updateDatabase()
 	{
 		DBOpen();
+		if(listUser == null)
+		{
+			return;
+		}
 		for(BankAccount user : listUser )
 		{
+		
 			try {
-				preStmt = conn.prepareStatement("INSERT INTO usersDB (AccNum,FirstName,LastName,Balance,email,PhoneNumber) Values (?,?,?,?,?,?)");
+				boolean userExist = retrieveUser(user);
 				
-				preStmt.setInt(1, user.getAccNum());
-				preStmt.setString(2, user.getfName());
-				preStmt.setString(3, user.getlName());
-				preStmt.setDouble(4, user.getBalance());
-				preStmt.setString(5, user.getEmail());
-				preStmt.setLong(6, user.getPhoneNumber());
+				if(!userExist)
+				{
+					preStmt = conn.prepareStatement("INSERT INTO usersDB (AccNum,FirstName,LastName,Balance,email,PhoneNumber) Values (?,?,?,?,?,?)");
+					
+					preStmt.setInt(1, user.getAccNum());
+					preStmt.setString(2, user.getfName());
+					preStmt.setString(3, user.getlName());
+					preStmt.setDouble(4, user.getBalance());
+					preStmt.setString(5, user.getEmail());
+					preStmt.setLong(6, user.getPhoneNumber());
+					
+					preStmt.executeUpdate();
+					System.out.println("Entered into database:"+user.getfName());
+					
+				}
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -123,6 +158,8 @@ public class BankUserDao {
 		
 
 	}
+	
+	//display the current user info
 	public void depositFunds(BankAccount user, double amount)
 	{
 	
@@ -167,6 +204,8 @@ public class BankUserDao {
 		
 		
 	}
+	
+	//withdraw money
 	public void withdrawFunds(BankAccount user, double amount)
 	{
 

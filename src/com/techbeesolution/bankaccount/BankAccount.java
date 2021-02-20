@@ -54,7 +54,7 @@ public class BankAccount {
 		if(checkRange(fName.length(),2))
 			this.fName = fName;
 		else
-			System.out.println("Name must be greate than 2 character");
+			System.out.println("Name must be greatee than 1 character");
 	}
 	public String getlName() {
 		return lName;
@@ -64,7 +64,7 @@ public class BankAccount {
 		if(checkRange(lName.length(),2))
 			this.lName = lName;
 		else
-			System.out.println("Name must be greate than 2 character");
+			System.out.println("Name must be greatee than 1 character");
 			
 	}
 	public String getEmail() {
@@ -81,7 +81,7 @@ public class BankAccount {
 		if(checkRange(s.length(),10))
 			this.phoneNumber = phoneNumber;
 		else
-			System.out.println("Phone Number must be greate than 10 character");
+			System.out.println("Phone Number must be have 10 value");
 	}
 
 	

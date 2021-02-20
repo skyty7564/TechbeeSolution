@@ -9,7 +9,7 @@ public class FrontEnd {
 		BankUserDao daoUserList  = new BankUserDao();
 		
 		Scanner userCheck = new Scanner(System.in);
-		System.out.println("Enter name:");
+		System.out.println("Enter Account Number:");
 		String userN = null;
 		userN = userCheck.nextLine();
 		
@@ -18,7 +18,18 @@ public class FrontEnd {
 			
 				BankAccount user;
 				System.out.println(userN);
-				user = daoUserList.retrieveUser(Integer.parseInt(userN));
+				int AccNumber = 0;
+				try
+				{
+					AccNumber = Integer.parseInt(userN);
+					user = daoUserList.retrieveUser(AccNumber);
+				}
+				catch (Exception e)
+				{
+					System.out.println("Invalid Account Number/Entry");
+					user = null;
+				}
+				
 			
 			
 				System.out.println("Check User \n-------------------------------");
@@ -99,7 +110,7 @@ public class FrontEnd {
 												System.out.println("Please Enter Balance:");
 												String balance = userCheck.next();
 												
-												try {
+											try {
 													BankAccount newUser = new BankAccount();
 													newUser.setAccNum(Integer.parseInt(accNum));
 													newUser.setfName(fName);
@@ -107,17 +118,20 @@ public class FrontEnd {
 													newUser.setBalance(Double.parseDouble(balance));
 													newUser.setEmail(email);
 													newUser.setPhoneNumber(Long.parseLong(phoneNum));
+													
+													System.out.println(newUser.getfName()+":"+newUser.getlName()+":"+newUser.getAccNum()+":"+newUser.getBalance()+":"+newUser.getEmail()+":"+newUser.getPhoneNumber());
 													daoUserList.addUser(newUser);
-												}
-												catch (Exception e)
-												{
-													System.out.println("Invalid Input");
-												}
-												
+											}
+											catch (Exception E)
+											{
+												System.out.println("Invalid Input");
+											}
 												System.out.println("******************Enter End Any time to stop adding user***********");
 												System.out.println("Do you want to continue adding user y/n:");
 												userAddInput = userCheck.next();
 											}while (!userAddInput.equals("n"));
+											
+											daoUserList.updateDatabase();
 											
 											
 											
@@ -143,14 +157,14 @@ public class FrontEnd {
 					}while (mainInput != 6);
 
 					System.out.println("log Out");
-					System.out.println("Enter name:");
+					System.out.println("Enter Account Number:");
 					userN = userCheck.nextLine();
 					
 				
 				}
 				else
 				{
-					System.out.println("Enter name:");
+					System.out.println("Enter Account Number:");
 					userN = userCheck.nextLine();	
 				}
 	
