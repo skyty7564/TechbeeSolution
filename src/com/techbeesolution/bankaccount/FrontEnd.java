@@ -1,5 +1,6 @@
 package com.techbeesolution.bankaccount;
 import java.util.Scanner;
+
 public class FrontEnd {
 
 	public static void main(String[] args) {
@@ -14,16 +15,19 @@ public class FrontEnd {
 		
 		do {
 					
-				boolean userExist = daoUserList.checkUser(userN);			
+			
+				BankAccount user;
+				System.out.println(userN);
+				user = daoUserList.retrieveUser(Integer.parseInt(userN));
+			
 			
 				System.out.println("Check User \n-------------------------------");
-				System.out.println(userExist);
-				if(userExist)
+
+				if(user != null)
 				{
 					int mainInput = -1;
 					
-					BankAccount user;
-					user = daoUserList.retrieveUser(userN);
+					
 					do {
 						System.out.println("Main Menu \n 1: Withdraw Fund \n 2: Deposit Fund \n 3: Display user Info \n 4: Add User \n 6: quit" );
 							//check for valid option
@@ -77,21 +81,46 @@ public class FrontEnd {
 											break;
 										case 4:
 										{
-											System.out.println("Please Enter First Name:");
-											String fName = userCheck.next();
-											System.out.println("Please Enter last Name:");
-											String lName = userCheck.next();
-											System.out.println("Please Enter Account Number:");
-											int accNum = userCheck.nextInt();
-											System.out.println("Please Enter Email:");
-											String email = userCheck.next();
-											System.out.println("Please Enter PhoneNumber:");
-											long phoneNum = userCheck.nextLong();
-											System.out.println("Please Enter Balance:");
-											double balance = userCheck.nextDouble();
+											String userAddInput = null;
+											userAddInput = userCheck.nextLine();
+											do
+											{
+									
+												System.out.println("Please Enter First Name:");
+												String fName = userCheck.next();
+												System.out.println("Please Enter last Name:");
+												String lName = userCheck.next();
+												System.out.println("Please Enter Account Number:");
+												String accNum = userCheck.next();
+												System.out.println("Please Enter Email:");
+												String email = userCheck.next();
+												System.out.println("Please Enter PhoneNumber:");
+												String phoneNum = userCheck.next();
+												System.out.println("Please Enter Balance:");
+												String balance = userCheck.next();
+												
+												try {
+													BankAccount newUser = new BankAccount();
+													newUser.setAccNum(Integer.parseInt(accNum));
+													newUser.setfName(fName);
+													newUser.setlName(lName);
+													newUser.setBalance(Double.parseDouble(balance));
+													newUser.setEmail(email);
+													newUser.setPhoneNumber(Long.parseLong(phoneNum));
+													daoUserList.addUser(newUser);
+												}
+												catch (Exception e)
+												{
+													System.out.println("Invalid Input");
+												}
+												
+												System.out.println("******************Enter End Any time to stop adding user***********");
+												System.out.println("Do you want to continue adding user y/n:");
+												userAddInput = userCheck.next();
+											}while (!userAddInput.equals("n"));
 											
-											BankAccount newUser = new BankAccount(accNum,balance,fName,lName,email,phoneNum);
-											daoUserList.addUser(newUser);
+											
+											
 										}
 										default:
 											validTran = true;

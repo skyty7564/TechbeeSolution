@@ -14,6 +14,7 @@ public class BankAccount {
 	{}
 	
 
+
 	public BankAccount(int accNum, double balance, String fName, String lName, String email, long phoneNumber) {
 		super();			
 			this.accNum = accNum;
@@ -80,7 +81,7 @@ public class BankAccount {
 		if(checkRange(s.length(),10))
 			this.phoneNumber = phoneNumber;
 		else
-			System.out.println("Name must be greate than 10 character");
+			System.out.println("Phone Number must be greate than 10 character");
 	}
 
 	
